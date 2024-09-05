@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  font-family: "Inter Tight", sans-serif;
+  letter-spacing: 0.02em;
+}
+
 .container {
   overflow: auto;
   height: 164px;
@@ -11,18 +18,21 @@
 
 .palette {
   display: flex;
-  gap: 8px;
+  gap: 2px;
+  flex-wrap: wrap;
 }
 
 .color {
   flex: 1;
-  height: 60px;
-  border-radius: 4px;
+  height: 40px;
+  width: 40px;
+  border-radius: 6px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 4px;
   position: relative;
+  border-radius: 400px;
 }
 
 .colorHex {
@@ -67,8 +77,6 @@
 }
 
 .imagePreview {
-  max-width: 100%;
-  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,10 +87,6 @@
 .imagePreview img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
-}
-
-.customTabs {
 }
 
 .customTabs [aria-selected="true"] {

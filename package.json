@@ -22,8 +22,8 @@
     "editorType": [
       "figma"
     ],
-    "id": "image-to-palette",
-    "name": "Image-to-palette",
+    "id": "create-a-palette",
+    "name": "Create a Palette",
     "main": "src/main.ts",
     "ui": "src/ui.tsx"
   }
