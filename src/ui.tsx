@@ -2,21 +2,21 @@ import "!prismjs/themes/prism-tomorrow.css";
 import {
   Button,
   Container,
-  Columns,
   Text,
   VerticalSpace,
   render,
+  Tabs,
+  TabsOption,
 } from "@create-figma-plugin/ui";
-import { emit } from "@create-figma-plugin/utilities";
 import { h, RefObject } from "preact";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import useColorThief from "use-color-thief";
 
 import styles from "./styles.css";
-import { ApplyColorsHandler } from "./types";
 import React from "preact/compat";
 
 function Plugin() {
+  const [activeTab, setActiveTab] = useState<string>("image");
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const { color, palette } = useColorThief(imageSrc as string, {
     format: "hex",
@@ -68,51 +68,81 @@ function Plugin() {
     return () => window.removeEventListener("resize", resizeWindow);
   }, [imageSrc, palette]);
 
-  return (
-    <Container space="medium" ref={containerElementRef}>
-      <VerticalSpace space="large" />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/10054/10054290.png"
-          alt="logo Logo"
-          style={{ width: "32px", height: "32px" }}
-        />
-      </div>
-      <VerticalSpace space="large" />
-      <Text>
-        <h2
-          style={{
-            textAlign: "center",
-            fontSize: "16px",
-            fontWeight: "600",
-          }}
-        >
-          Image-to-Palette
-        </h2>
-      </Text>
-      <VerticalSpace space="small" />
-      <Text style={{ textAlign: "center", color: "gray" }}>
-        Upload an image to generate a color palette:
-      </Text>
-      <VerticalSpace space="medium" />
-      <div className={styles.uploadContainer}>
+  const renderImageTab = () => (
+    <React.Fragment>
+      <div
+        className={styles.uploadContainer}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          height: "120px",
+          marginTop: "10px",
+          cursor: "pointer",
+          border: "2px dashed var(--figma-color-border)",
+          borderRadius: "8px",
+          padding: "20px",
+        }}
+        onClick={() => document.getElementById("fileInput")?.click()}
+      >
         <input
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
           className={styles.fileInput}
           id="fileInput"
+          style={{ display: "none" }}
         />
-        <label
-          htmlFor="fileInput"
-          className={styles.fileInputLabel}
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M7 10L12 15L17 10"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 15V3"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <Text
           style={{
-            color: "#000",
-            backgroundColor: "#fff",
+            color: "var(--figma-color-text)",
+            fontSize: "14px",
+            marginTop: "10px",
+            marginBottom: "4px",
           }}
         >
-          Choose an image
-        </label>
+          Click to upload an image
+        </Text>
+        <Text
+          style={{
+            color: "gray",
+            fontSize: "12px",
+            textAlign: "center",
+          }}
+        >
+          Upload an image to generate a color palette
+        </Text>
       </div>
       <VerticalSpace space="medium" />
       {imageSrc && (
@@ -120,14 +150,15 @@ function Plugin() {
           <div
             style={{
               display: "flex",
-              justifyContent: "left",
+              justifyContent: "center",
               alignItems: "center",
               gap: "24px",
               marginBottom: "10px",
               marginLeft: "10px",
+              marginRight: "10px",
             }}
           >
-            <div className={styles.imagePreview} style={{}}>
+            <div className={styles.imagePreview}>
               <img
                 src={imageSrc}
                 alt="Uploaded image"
@@ -138,11 +169,7 @@ function Plugin() {
               <div style={{ width: "48%" }}>
                 <Text>
                   <h3
-                    style={{
-                      margin: "0",
-                      fontWeight: "bold",
-                      color: "gray",
-                    }}
+                    style={{ margin: "0", fontWeight: "bold", color: "gray" }}
                   >
                     Generated Palette:
                   </h3>
@@ -204,7 +231,63 @@ function Plugin() {
           </Button>
         </React.Fragment>
       )}
-      <VerticalSpace space="small" />
+    </React.Fragment>
+  );
+
+  const renderWebsiteTab = () => (
+    <div style={{ marginTop: "10px" }}>
+      <Text style={{ textAlign: "center", color: "gray" }}>
+        Website tab content coming soon...
+      </Text>
+    </div>
+  );
+
+  const renderRandomTab = () => (
+    <div style={{ marginTop: "10px" }}>
+      <Text style={{ textAlign: "center", color: "gray" }}>
+        Random tab content coming soon...
+      </Text>
+    </div>
+  );
+
+  const tabOptions: Array<TabsOption> = [
+    {
+      children: renderImageTab(),
+      value: "image",
+    },
+    {
+      children: renderWebsiteTab(),
+      value: "website",
+    },
+    {
+      children: renderRandomTab(),
+      value: "random",
+    },
+  ];
+
+  function handleTabChange(newValue: string) {
+    console.log(newValue);
+    setActiveTab(newValue);
+  }
+
+  return (
+    <Container
+      ref={containerElementRef}
+      space="extraSmall"
+      style={
+        {
+          // backgroundColor: "#fff",
+        }
+      }
+    >
+      <Tabs
+        options={tabOptions}
+        value={activeTab}
+        onValueChange={handleTabChange}
+      />
+      {activeTab === "image"}
+      {activeTab === "website"}
+      {activeTab === "random"}
     </Container>
   );
 }
