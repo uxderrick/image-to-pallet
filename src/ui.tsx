@@ -258,7 +258,7 @@ function Plugin() {
                 border: "1px solid var(--figma-color-border)",
               }}
             >
-              Add to Styles
+              Add colors to Styles
             </Button>
             <Button
               onClick={handleBackClick}
@@ -268,7 +268,7 @@ function Plugin() {
                 color: "var(--figma-color-text)",
               }}
             >
-              Upload another image
+              Start over
             </Button>
           </div>
         </React.Fragment>
@@ -347,7 +347,8 @@ function Plugin() {
           border: "none",
           color: "gray",
           padding: "0",
-          margin: "0",
+          marginTop: "2px",
+          marginBottom: "4px",
           textDecoration: "underline",
         }}
       >
