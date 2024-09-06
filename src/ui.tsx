@@ -12,14 +12,14 @@ import {
 import { h, RefObject } from "preact";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import useColorThief from "use-color-thief";
-import { ColorThiefColor } from 'use-color-thief';
+import { ColorThiefColor } from "use-color-thief";
 
 import styles from "./styles.css";
 import React from "preact/compat";
 
-import { ImageTab } from './components/ImageTab'
-import { WebsiteTab } from './components/WebsiteTab'
-import { RandomTab } from './components/RandomTab'
+import { ImageTab } from "./components/ImageTab";
+import { WebsiteTab } from "./components/WebsiteTab";
+import { RandomTab } from "./components/RandomTab";
 
 function Plugin() {
   const [activeTab, setActiveTab] = useState<string>("image");
@@ -27,8 +27,8 @@ function Plugin() {
   const { color, palette } = useColorThief(imageSrc as string, {
     format: "hex",
     colorCount: 8,
-    quality: 10,
-  }) as { color: string | null, palette: ColorThiefColor[] };
+    quality: 1,
+  }) as { color: string | null; palette: ColorThiefColor[] };
   const containerElementRef: RefObject<HTMLDivElement> = useRef(null);
   const [showPalette, setShowPalette] = useState<boolean>(false);
 
@@ -89,24 +89,28 @@ function Plugin() {
         <ImageTab
           showPalette={showPalette}
           imageSrc={imageSrc}
-          palette={palette?.filter((color): color is string => typeof color === 'string') || []}
+          palette={
+            palette?.filter(
+              (color): color is string => typeof color === "string"
+            ) || []
+          }
           handleImageUpload={handleImageUpload}
           handleBackClick={handleBackClick}
           handleApplyColorsButtonClick={handleApplyColorsButtonClick}
           handleAddToStylesClick={handleAddToStylesClick}
         />
       ),
-      value: 'image'
+      value: "image",
     },
     {
       children: <WebsiteTab />,
-      value: 'website'
+      value: "website",
     },
     {
       children: <RandomTab />,
-      value: 'random'
-    }
-  ]
+      value: "random",
+    },
+  ];
 
   function handleTabChange(newValue: string) {
     console.log(newValue);
