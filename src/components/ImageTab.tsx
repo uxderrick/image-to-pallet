@@ -1,15 +1,15 @@
-import { h } from 'preact'
-import { Button, Text, VerticalSpace } from '@create-figma-plugin/ui'
-import styles from '../styles.css'
+import { h } from "preact";
+import { Button, Text, VerticalSpace } from "@create-figma-plugin/ui";
+import styles from "../styles.css";
 
 interface ImageTabProps {
-  showPalette: boolean
-  imageSrc: string | null
-  palette: string[] | null
-  handleImageUpload: (event: Event) => void
-  handleBackClick: () => void
-  handleApplyColorsButtonClick: () => void
-  handleAddToStylesClick: () => void
+  showPalette: boolean;
+  imageSrc: string | null;
+  palette: string[] | null;
+  handleImageUpload: (event: Event) => void;
+  handleBackClick: () => void;
+  handleApplyColorsButtonClick: () => void;
+  handleAddToStylesClick: () => void;
 }
 
 export function ImageTab({
@@ -19,7 +19,7 @@ export function ImageTab({
   handleImageUpload,
   handleBackClick,
   handleApplyColorsButtonClick,
-  handleAddToStylesClick
+  handleAddToStylesClick,
 }: ImageTabProps) {
   return (
     <div>
@@ -27,19 +27,19 @@ export function ImageTab({
         <div
           className={styles.uploadContainer}
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px',
-            height: '120px',
-            marginTop: '10px',
-            cursor: 'pointer',
-            border: '2px dashed var(--figma-color-border)',
-            borderRadius: '8px',
-            padding: '20px'
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+            height: "120px",
+            marginTop: "10px",
+            cursor: "pointer",
+            border: "2px dashed var(--figma-color-border)",
+            borderRadius: "8px",
+            padding: "20px",
           }}
-          onClick={() => document.getElementById('fileInput')?.click()}
+          onClick={() => document.getElementById("fileInput")?.click()}
         >
           <input
             type="file"
@@ -47,7 +47,7 @@ export function ImageTab({
             onChange={handleImageUpload}
             className={styles.fileInput}
             id="fileInput"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
           />
           <svg
             width="20"
@@ -80,19 +80,19 @@ export function ImageTab({
           </svg>
           <Text
             style={{
-              color: 'var(--figma-color-text)',
-              fontSize: '12px',
-              marginTop: '4px',
-              marginBottom: '2px'
+              color: "var(--figma-color-text)",
+              fontSize: "12px",
+              marginTop: "4px",
+              marginBottom: "2px",
             }}
           >
             Click to upload an image
           </Text>
           <Text
             style={{
-              color: 'gray',
-              fontSize: '12px',
-              textAlign: 'center'
+              color: "gray",
+              fontSize: "12px",
+              textAlign: "center",
             }}
           >
             Upload an image to generate a color palette
@@ -103,20 +103,20 @@ export function ImageTab({
           <VerticalSpace space="extraSmall" />
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'left',
-              gap: '1fr'
+              display: "flex",
+              justifyContent: "left",
+              gap: "1fr",
             }}
           >
             {palette && (
-              <div style={{ width: 'fit-content' }}>
+              <div style={{ width: "fit-content" }}>
                 <VerticalSpace space="extraSmall" />
                 <Text>
                   <h3
                     style={{
-                      margin: '0',
-                      color: 'gray',
-                      marginBottom: '4px'
+                      margin: "0",
+                      color: "gray",
+                      marginBottom: "4px",
                     }}
                   >
                     Colors found:
@@ -126,41 +126,21 @@ export function ImageTab({
                 <div
                   className={styles.palette}
                   style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(9, 1fr)',
-                    gap: '8px'
+                    display: "grid",
+                    gridTemplateColumns: "repeat(9, 1fr)",
+                    gap: "8px",
                   }}
                 >
-                  <div
-                    className={styles.imagePreview}
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      backgroundColor: 'var(--figma-color-background)',
-                      border: '1px solid var(--figma-color-border)',
-                      borderRadius: '8px'
-                    }}
-                  >
-                    <img
-                      src={imageSrc as string}
-                      alt="Uploaded image"
-                      style={{
-                        width: '36px',
-                        height: '36px',
-                        objectFit: 'cover'
-                      }}
-                    />
-                  </div>
                   {palette.map((color, index) => (
                     <div
                       key={index}
                       className={styles.color}
                       style={{
                         backgroundColor: color as string,
-                        aspectRatio: '1 / 1',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        aspectRatio: "1 / 1",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     ></div>
                   ))}
@@ -172,21 +152,21 @@ export function ImageTab({
           <div
             className="divider"
             style={{
-              width: '100%',
-              height: '1px',
-              backgroundColor: 'var(--figma-color-border)',
-              margin: '0',
-              opacity: '0.2'
+              width: "100%",
+              height: "1px",
+              backgroundColor: "var(--figma-color-border)",
+              margin: "0",
+              opacity: "0.2",
             }}
           ></div>
           <VerticalSpace space="small" />
           <div
             className="div"
             style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '8px'
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              gap: "8px",
             }}
           >
             <Button onClick={handleApplyColorsButtonClick} disabled={!palette}>
@@ -197,7 +177,7 @@ export function ImageTab({
               disabled={!palette}
               secondary
               style={{
-                border: '1px solid var(--figma-color-border)'
+                border: "1px solid var(--figma-color-border)",
               }}
             >
               Add colors to Styles
@@ -205,9 +185,9 @@ export function ImageTab({
             <Button
               onClick={handleBackClick}
               style={{
-                backgroundColor: 'transparent',
-                border: '1px solid var(--figma-color-border)',
-                color: 'var(--figma-color-text)'
+                backgroundColor: "transparent",
+                border: "1px solid var(--figma-color-border)",
+                color: "var(--figma-color-text)",
               }}
             >
               Start over
@@ -216,5 +196,5 @@ export function ImageTab({
         </div>
       )}
     </div>
-  )
+  );
 }
